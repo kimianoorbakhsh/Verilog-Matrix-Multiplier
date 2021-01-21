@@ -1,40 +1,40 @@
+
+`timescale 1ns/1ns 
+
 module adder_TB();
-	reg [31:0]Number1, Number2;
-	reg reset, clk;
-	wire [31:0]Result;
+	reg 	clk=0, rst=1;
+	reg		[31:0] 	a, b;
+	wire   	[31:0] 	z;
+	reg 	a_stb, b_stb, z_ack;
+	wire 	a_ack, b_ack, z_stb;
 	
-	IEEE_SP_FP_ADDER ia1(clk,reset,Number1,Number2,Result);
+	always #10 clk=~clk;  // 25MHz
 	
-	always 
-	#2 clk = ~clk;
+	adder adder_39759952(
+		.clk(clk),
+		.rst(rst),
+		.input_a(a),
+		.input_a_stb(a_stb),
+		.input_a_ack(a_ack),
+		.input_b(b),
+		.input_b_stb(b_stb),
+		.input_b_ack(b_ack),
+		.output_z(z),
+		.output_z_stb(z_stb),
+		.output_z_ack(z_ack));
 	
 	initial begin
-	#2 clk=1;
-    reset=1;
-        
-       #4 reset=0;
-           
-    Number1 = 32'b0100_0010_1100_0110_0000_0000_0000_0000;   //99
-	Number2 = 32'b0100_0011_0011_0010_0000_0000_0000_0000;   //178   */
-
-    #4;Number1 = 32'b0100_0010_1100_0010_0000_0000_0000_0000;   //97
-	Number2 = 32'b1100_0010_1001_1110_0000_0000_0000_0000;   //-79
-
-    #4;Number1 = 32'b1100_0010_0101_1100_0000_0000_0000_0000;   //-55
-	Number2 = 32'b0100_0010_1001_0110_0000_0000_0000_0000;   //75 
-    #4;Number1 = 32'b1100_0011_1000_1100_0000_0000_0000_0000;   //-280
-	Number2 = 32'b1100_0010_1000_1010_0000_0000_0000_0000;   //-69 
-    #4;Number1 = 32'b0000_0000_0000_0000_0000_0000_0000_0000;   //0
-	Number2 = 32'b0000_0000_0000_0000_0000_0000_0000_0000;   //0 
-    #4;Number1 = 32'b0000_0000_0000_0000_0000_0000_0000_0000;   //0
-	Number2 = 32'b1100_0010_1110_0010_0000_0000_0000_0000;   //-113 
-    #2;
-        
-    #200 $finish;
-	end
-
-	initial begin
-		$dumpfile("adder_test.vcd");
-		$dumpvars(0,tieee);
+	    $monitor("%b + %b = %b", a, b, z);
+		a = 0;
+		b = 0;
+		rst = 1;
+		#1000
+		rst = 0;
+		a = 32'b1100_0001_0100_1100_0101_0001_1110_1100;	//-12.77
+		b = 32'b0100_0010_0000_0110_1010_0010_1110_1011;   	//33.6591
+		a_stb = 1;
+		b_stb = 1;
+		#2000;
+		$stop;
 	end
 endmodule
