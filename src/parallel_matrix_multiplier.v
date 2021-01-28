@@ -27,10 +27,11 @@ reg [31:0]  A       [0:n-1][0:n-1];
 reg [31:0]  B       [0:n-1][0:n-1];
 reg [31:0]  seq_res [0:seq_num-1][0:seq_num-1][0:m-1][0:m-1];
 
-genvar i, j;
+genvar i, j, k;
 generate
     for (i = 0; i < seq_num; i = i + 1) begin
         for (j = 0; j < seq_num; j = j + 1) begin
+            for (k = 0; j < seq_num; j = j + 1) begin
             sequential_matrix_multiplier SEQ (
                 .clk(clk),
                 .rst(rst),
