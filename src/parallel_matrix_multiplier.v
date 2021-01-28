@@ -17,7 +17,8 @@ module parallel_matrix_multiplier
     input   [$ceil($clog2(n))-1:0]  z_i,
     input   [$ceil($clog2(n))-1:0]  z_j,
     output                          z_stb,
-    output  [31:0]                  z_out
+    output  [31:0]                  z_out,
+    output                          done
 );
 
 endmodule
