@@ -7,6 +7,7 @@ module sequential_matrix_multiplier_TB();
     reg [31:0]  A   [0:m-1][0:m-1];
     reg [31:0]  B   [0:m-1][0:m-1];
     reg [31:0]  R   [0:m-1][0:m-1];
+    reg write_start = 0;
 
     always #10 clk = ~clk;
 
@@ -30,17 +31,29 @@ module sequential_matrix_multiplier_TB();
 
     integer file_id;
 
+    writer #(.n(m)) out_writer (
+        .clk(clk),
+        .value(R[r_i][r_j]),
+        .start(write_start),
+        .i(r_i),
+        .j(r_j),
+        .done(write_done)
+    )
+
     initial begin
         file_id = $fopen("../data/seq_input_a.bin", "rb");
         $fread(A, file_id);
+        $fclose(file_id);
         file_id = $fopen("../data/seq_input_b.bin", "rb");
         $fread(B, file_id);
+        $fclose(file_id);
 
         start = 1;
 
         wait (done);
-        file_id = $fopen("../data/seq_output.bin", "wb");
-        $fwrite(R, file_id);
+        write_start = 1;
+        wait (write_done);
+        $stop;
     end
 
     always @ (posedge clk) begin

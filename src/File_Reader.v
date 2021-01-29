@@ -31,6 +31,7 @@ initial begin
         default: $display("Invalid file num %d", filenum);
     endcase
     $fread(matrix, File_ID);
+    $fclose(File_ID);
 end
 
 always @(posedge clk) begin

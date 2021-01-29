@@ -1,14 +1,13 @@
 module writer
 #(
-    parameter n = 8,
-    parameter filenum = 1
+    parameter n = 8
 )
 (
 
     input                               clk,
     // input                               value_stb,
     input      [31:0]                   value,
-    input                               start,
+    input      tr                         start,
     output  reg [$ceil($clog2(n))-1:0]  i,
     output  reg [$ceil($clog2(n))-1:0]  j,
     // output  reg                         value_ack,
@@ -22,14 +21,15 @@ localparam s_done = 2'b11;
 reg [1:0] state   = s_idle; 
 
 initial begin
-    file = $fopen("sim_out.txt", "wb");
+    file = $fopen("sim_out.bin", "ab");
 
     for (i = 0 ; i < n ; i = i + 1) begin
         for (j = 0 ; j < n ; j = j + 1) begin
-
+            #10 $fwrite(file, "%b", value);
         end
     end
-
+    done = 1;
+    $fclose(file);
 end
 
 /*
