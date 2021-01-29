@@ -48,7 +48,6 @@ module sequential_matrix_multiplier_TB();
         $fclose(file_id);
 
         start = 1;
-
         wait (done);
         write_start = 1;
         wait (write_done);

@@ -6,18 +6,15 @@ module writer_testbench #(
 
     integer i ;
     integer j ;
-    integer val;
+    reg val;
+    reg write_start = 0;
 
-    writer fileWriter
-#(
-    .n(n)
-)
-(
-    input      [31:0]                   value,
-    input      tr                         start,
-    output  reg [$ceil($clog2(n))-1:0]  i,
-    output  reg [$ceil($clog2(n))-1:0]  j,
-    output  reg                         done
+    writer #(.n(n)) fileWriter (
+        .value(matrix[r_i][r_j]),
+        .start(write_start),
+        .i(r_i),
+        .j(r_j),
+        .done(write_done)
 )
 
     initial begin
@@ -29,6 +26,9 @@ module writer_testbench #(
             end
         end
 
+        write_start = 1;
+        wait(write_done);
+        $display("check the file");
 
     end
 
