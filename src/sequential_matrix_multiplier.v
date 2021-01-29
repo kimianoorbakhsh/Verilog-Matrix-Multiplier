@@ -32,7 +32,7 @@ localparam m_len = $ceil($clog2(m));
 reg [1:0]       state;
 reg [m_len-1:0] i;
 reg [m_len-1:0] j;
-reg [m_len-1:0] k;
+reg [m_len-1:0] k;// a[i,k] * b [k,j]
 reg             mul_input_a_stb;
 reg             mul_input_b_stb;
 reg             mul_output_z_ack;
@@ -125,11 +125,11 @@ always @(posedge clk or negedge rst) begin
                 // when received -> go to calc
                 if (add_output_z_stb) begin
                     z_out <= add_result;
+                    add_output_z_ack <= 1;
                     z_stb <= 1;
                 end
                 if (z_ack) begin
                     z_stb <= 0;
-                    add_output_z_ack <= 1;
                     state <= s_calc;
 
                     if (k == m - 1) begin

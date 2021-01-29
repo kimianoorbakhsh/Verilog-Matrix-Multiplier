@@ -18,6 +18,7 @@ module adder_TB();
 		.input_a_ack(a_ack),
 		.input_b(b),
 		.input_b_stb(b_stb),
+
 		.input_b_ack(b_ack),
 		.output_z(z),
 		.output_z_stb(z_stb),
