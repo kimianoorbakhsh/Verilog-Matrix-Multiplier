@@ -7,18 +7,19 @@ module writer
     // input                               clk,
     // input                               value_stb,
     input      [31:0]                   value,
-    // input      tr                         start,
+    input                               start,
     output  reg [$ceil($clog2(n))-1:0]  i,
     output  reg [$ceil($clog2(n))-1:0]  j,
     // output  reg                         value_ack,
     output  reg                         done
-)
+);
 
 localparam s_idle = 2'b00;
 localparam s_write = 2'b01;
 localparam s_done = 2'b11;
 
 reg [1:0] state   = s_idle; 
+integer file;
 
 initial begin
     wait (start);
