@@ -160,4 +160,8 @@ always @(posedge clk or negedge rst) begin
     end
 end
 
+initial begin
+    $monitor("state: %d, z_out: %b", state, z_out);
+end
+
 endmodule
