@@ -32,7 +32,6 @@ module sequential_matrix_multiplier_TB();
     integer file_id;
 
     writer #(.n(m)) out_writer (
-        .clk(clk),
         .value(R[r_i][r_j]),
         .start(write_start),
         .i(r_i),
