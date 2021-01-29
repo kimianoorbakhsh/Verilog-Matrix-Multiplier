@@ -8,7 +8,7 @@ module sequential_matrix_multiplier
     input                           start,
     input   [31:0]                  a_in,
     input   [31:0]                  b_in,
-    input                           z_ack;
+    input                           z_ack,
     output  [$ceil($clog2(m))-1:0]  a_i,
     output  [$ceil($clog2(m))-1:0]  a_j,
     output  [$ceil($clog2(m))-1:0]  b_i,
@@ -16,7 +16,7 @@ module sequential_matrix_multiplier
     output  reg [31:0]              z_out,
     output  [$ceil($clog2(m))-1:0]  z_i,
     output  [$ceil($clog2(m))-1:0]  z_j,
-    output                          z_stb,
+    output  reg                     z_stb,
     output  reg                     done
 );
 
@@ -33,6 +33,12 @@ reg [1:0]       state;
 reg [m_len-1:0] i;
 reg [m_len-1:0] j;
 reg [m_len-1:0] k;
+reg             mul_input_a_stb;
+reg             mul_input_b_stb;
+reg             mul_output_z_ack;
+reg             add_input_a_stb;
+reg             add_input_b_stb;
+reg             add_output_z_ack;
 
 assign a_i = i;
 assign a_j = k;
@@ -73,7 +79,7 @@ adder ADDR(
 
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
-        state <= idle;
+        state <= s_idle;
         done <= 0;
         i <= 0;
         j <= 0;
@@ -147,7 +153,7 @@ always @(posedge clk or negedge rst) begin
             end
             s_done : begin
                 done <= 1;
-                state <= idle;
+                state <= s_idle;
             end
             default: state <= s_idle;
         endcase
