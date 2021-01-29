@@ -20,11 +20,13 @@ module sequential_matrix_multiplier
     output  reg                     done
 );
 
-localparam s_idle       =       3'b000;
-localparam s_calc       =       3'b001;
-localparam s_wait_mul   =       3'b010;
-localparam s_wait_add   =       3'b011; 
-localparam s_done       =       3'b100;
+localparam s_idle               =       3'b000;
+localparam s_a_ack_mul          =       3'b001;
+localparam s_b_ack_mul          =       3'b010;
+localparam s_a_ack_add          =       3'b011;
+localparam s_b_ack_add          =       3'b100;
+localparam s_wait_add           =       3'b101; 
+localparam s_done               =       3'b110;
 
 localparam m_len = $ceil($clog2(m));
 
@@ -98,29 +100,41 @@ always @(posedge clk or negedge rst) begin
                     z_out <= 0;
                 end
             end
-            s_calc : begin
+            s_a_ack_mul: begin
                 mul_input_a_stb <= 1;
-                mul_input_b_stb <= 1;
-                // wait until inputs are acknowledged
-                if (mul_input_a_ack && mul_input_b_ack) begin
+                if (mul_input_a_ack) begin
                     mul_input_a_stb <= 0;
+                    state <= s_b_ack_mul;
+                end
+            end
+            s_b_ack_mul: begin
+                mul_input_b_stb <= 1;
+                if (mul_input_b_ack) begin
                     mul_input_b_stb <= 0;
                     state <= s_wait_mul;
                 end
             end
-            s_wait_mul: begin
+            s_a_ack_add: begin
                 // when received -> go to wait add
                 if (mul_output_z_stb) begin
                     add_input_a_stb <= 1;
-                    add_input_b_stb <= 1;
+                
                 end
-                if (add_input_a_ack && add_input_b_ack) begin
-                    mul_output_z_ack <= 1;
+                if (add_input_a_ack) begin
                     add_input_a_stb <= 0;
+                    state <= s_b_ack_add;
+                end
+            end
+
+            s_b_ack_add: begin   
+                add_input_b_stb <= 1;
+                if(add_input_b_ack) begin
+                    mul_output_z_ack <= 1;
                     add_input_b_stb <= 0;
                     state <= s_wait_add;
                 end
-            end
+            end 
+
             s_wait_add: begin
                 // when received -> go to calc
                 if (add_output_z_stb) begin
@@ -130,7 +144,7 @@ always @(posedge clk or negedge rst) begin
                 end
                 if (z_ack) begin
                     z_stb <= 0;
-                    state <= s_calc;
+                    state <= s_a_ack_mul;
 
                     if (k == m - 1) begin
                         z_out <= 0;
