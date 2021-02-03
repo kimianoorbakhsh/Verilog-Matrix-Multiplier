@@ -1,0 +1,4 @@
+run simulation -> sequential_matrix_multiplier_TB:
+        vsim -voptargs=+acc work.sequential_matrix_multiplier_TB
+
+        

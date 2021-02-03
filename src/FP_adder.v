@@ -152,7 +152,7 @@ module adder(
           end else begin
             b_m[26] <= 1;
           end
-          state <= align;
+          state <= align;    
         end
       end
 

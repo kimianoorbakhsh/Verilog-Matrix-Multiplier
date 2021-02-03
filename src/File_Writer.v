@@ -8,8 +8,8 @@ module writer
     // input                               value_stb,
     input      [31:0]                   value,
     input                               start,
-    output  reg [$ceil($clog2(n))-1:0]  i,
-    output  reg [$ceil($clog2(n))-1:0]  j,
+    output  reg [4:0]  i,
+    output  reg [4:0]  j,
     // output  reg                         value_ack,
     output  reg                         done
 );

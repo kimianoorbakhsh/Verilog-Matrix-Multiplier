@@ -1,7 +1,7 @@
 module sequential_matrix_multiplier_TB();
     localparam m = 4;
     reg         clk = 0;
-    reg         rst = 1;
+    reg         rst = 0;
     reg         start = 0;
     reg         z_ack = 0;
     reg [31:0]  A   [0:m-1][0:m-1];
@@ -48,10 +48,10 @@ module sequential_matrix_multiplier_TB();
         $fread(B, file_id);
         $fclose(file_id);
 
-        rst = 1;
-        #clock_period;
-        #clock_period;
-        rst = 0;
+        // rst = 1;
+        // #clock_period;
+        // #clock_period;
+        // rst = 0;
 
         start = 1;
         wait (done);
