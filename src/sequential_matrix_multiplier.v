@@ -27,6 +27,7 @@ localparam s_a_ack_add          =       3'b011;
 localparam s_b_ack_add          =       3'b100;
 localparam s_wait_add           =       3'b101; 
 localparam s_done               =       3'b110;
+localparam s_reset              =       3'b111;
 
 localparam m_len = $ceil($clog2(m));
 
@@ -41,6 +42,7 @@ reg             mul_output_z_ack;
 reg             add_input_a_stb;
 reg             add_input_b_stb;
 reg             add_output_z_ack;
+reg             reset;
 
 assign a_i = i;
 assign a_j = k;
@@ -56,7 +58,7 @@ multiplier MUL(
     .input_b_stb(mul_input_b_stb),
     .output_z_ack(mul_output_z_ack),
     .clk(clk),
-    .rst(rst),
+    .rst(reset),
     .output_z(mul_result),
     .output_z_stb(mul_output_z_stb),
     .input_a_ack(mul_input_a_ack),
@@ -70,7 +72,7 @@ adder ADDR(
     .input_b_stb(add_input_b_stb),
     .output_z_ack(add_output_z_ack),
     .clk(clk),
-    .rst(rst),
+    .rst(reset),
     .output_z(add_result),
     .output_z_stb(add_output_z_stb),
     .input_a_ack(add_input_a_ack),
@@ -80,25 +82,31 @@ adder ADDR(
 
 
 always @(posedge clk or negedge rst) begin
-    if (!rst) begin
+    if (rst) begin
         state <= s_idle;
         done <= 0;
         i <= 0;
         j <= 0;
         k <= 0;
         z_out <= 0;
+        reset <= 1;
     end
     else begin
         case (state)
-            s_idle : begin
+            s_idle: begin
                 if (start) begin
-                    state <= s_a_ack_mul;
+                    state <= s_reset;
                     done <= 0;
                     i <= 0;
                     j <= 0;
                     k <= 0;
                     z_out <= 0;
+                    reset <= 1;
                 end
+            end
+            s_reset: begin
+                    reset <= 0;
+                    state <= s_a_ack_mul;
             end
             s_a_ack_mul: begin
                 mul_input_a_stb <= 1;
@@ -144,7 +152,8 @@ always @(posedge clk or negedge rst) begin
                 end
                 if (z_ack) begin
                     z_stb <= 0;
-                    state <= s_a_ack_mul;
+                    reset <= 1;
+                    state <= s_reset;
 
                     if (k == m - 1) begin
                         z_out <= 0;

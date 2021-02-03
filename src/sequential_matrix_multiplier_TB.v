@@ -9,7 +9,8 @@ module sequential_matrix_multiplier_TB();
     reg [31:0]  R   [0:m-1][0:m-1];
     reg write_start = 0;
 
-    always #10 clk = ~clk;
+    localparam clock_period = 10;
+    always #clock_period clk = ~clk;
 
     sequential_matrix_multiplier MUL(
         .clk(clk),
@@ -46,6 +47,9 @@ module sequential_matrix_multiplier_TB();
         file_id = $fopen("data/seq_input_b.bin", "rb");
         $fread(B, file_id);
         $fclose(file_id);
+
+        rst = 1;
+        #2*clock_period rst = 0;
 
         start = 1;
         wait (done);
