@@ -92,7 +92,7 @@ always @(posedge clk or negedge rst) begin
         case (state)
             s_idle : begin
                 if (start) begin
-                    state <= s_calc;
+                    state <= s_a_ack_mul;
                     done <= 0;
                     i <= 0;
                     j <= 0;
@@ -114,7 +114,7 @@ always @(posedge clk or negedge rst) begin
                     state <= s_wait_mul;
                 end
             end
-            s_a_ack_add: begin
+            s_wait_mul: begin
                 // when received -> go to wait add
                 if (mul_output_z_stb) begin
                     add_input_a_stb <= 1;
