@@ -49,7 +49,9 @@ module sequential_matrix_multiplier_TB();
         $fclose(file_id);
 
         rst = 1;
-        #2*clock_period rst = 0;
+        #clock_period;
+        #clock_period;
+        rst = 0;
 
         start = 1;
         wait (done);

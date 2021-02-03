@@ -9,13 +9,19 @@ module sequential_matrix_multiplier
     input   [31:0]                  a_in,
     input   [31:0]                  b_in,
     input                           z_ack,
-    output  [$ceil($clog2(m))-1:0]  a_i,
-    output  [$ceil($clog2(m))-1:0]  a_j,
-    output  [$ceil($clog2(m))-1:0]  b_i,
-    output  [$ceil($clog2(m))-1:0]  b_j,
+    output  [4:0]  a_i,
+    output  [4:0]  a_j,
+    output  [4:0]  b_i,
+    output  [4:0]  b_j,
+    // output  [$ceil($clog2(m))-1:0]  a_i,
+    // output  [$ceil($clog2(m))-1:0]  a_j,
+    // output  [$ceil($clog2(m))-1:0]  b_i,
+    // output  [$ceil($clog2(m))-1:0]  b_j,
     output  reg [31:0]              z_out,
-    output  [$ceil($clog2(m))-1:0]  z_i,
-    output  [$ceil($clog2(m))-1:0]  z_j,
+    // output  [$ceil($clog2(m))-1:0]  z_j,
+    // output  [$ceil($clog2(m))-1:0]  z_i,
+    output  [4:0]  z_j,
+    output  [4:0]  z_i,
     output  reg                     z_stb,
     output  reg                     done
 );
@@ -23,7 +29,7 @@ module sequential_matrix_multiplier
 localparam s_idle               =       3'b000;
 localparam s_a_ack_mul          =       3'b001;
 localparam s_b_ack_mul          =       3'b010;
-localparam s_a_ack_add          =       3'b011;
+localparam s_wait_mul           =       3'b011;
 localparam s_b_ack_add          =       3'b100;
 localparam s_wait_add           =       3'b101; 
 localparam s_done               =       3'b110;
