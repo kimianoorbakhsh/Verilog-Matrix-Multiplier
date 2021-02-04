@@ -1,3 +1,4 @@
+`timescale 1 ns / 1 ns
 module writer
 #(
     parameter n = 8,

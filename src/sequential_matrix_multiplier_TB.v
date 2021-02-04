@@ -30,6 +30,7 @@ module sequential_matrix_multiplier_TB();
         .start(start),
         .a_in(A[a_i][a_j]),
         .b_in(B[b_i][b_j]),
+        .current_element(R[z_i][z_j]),
         .z_ack(z_ack),
         .a_i(a_i),
         .a_j(a_j),
