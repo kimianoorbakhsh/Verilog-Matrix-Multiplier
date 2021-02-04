@@ -191,19 +191,22 @@ always @(posedge clk or posedge rst) begin
                         z_out <= 0;
                         k <= 0;
 
+
                         if (j == m - 1) begin
                             j <= 0;
 
                             if (i == m - 1)
                                 state <= s_done;
                             else
-                                $display("all na done! -> i = %d", i);
+                                $display("\t i -> %d", i);
                                 i <= i + 1;
                         end
                         else
+                            $display("\t j -> %d", j);
                             j <= j + 1;
                     end
                     else 
+                        $display("\t k -> %d", k);
                         k <= k + 1;
                 end
             end
