@@ -1,12 +1,12 @@
 module writer_testbench #(
-    parameter n = 8   
+    parameter n = 4   
 )();
 
     reg [31:0]  matrix[0:n-1][0:n-1];
 
     integer i ;
     integer j ;
-    reg val;
+    reg [5:0] val;
     reg write_start = 0;
 
     writer #(.n(n)) fileWriter (
@@ -21,9 +21,9 @@ module writer_testbench #(
         val = 0;
         for (i = 0 ; i < n ; i = i + 1) begin
             for (j = 0 ; j < n ; j = j + 1) begin
-                matrix[i][j] = val;
                 val = val + 1;
-                $display("val = %d", );
+                matrix[i][j] = val;
+                $display("val = %d", val);
             end
         end
 

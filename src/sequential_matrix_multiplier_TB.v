@@ -1,5 +1,6 @@
 module sequential_matrix_multiplier_TB();
     localparam m = 4;
+    localparam m_len = $ceil($clog2(m));
     reg         clk = 0;
     reg         rst = 0;
     reg         start = 0;
@@ -8,6 +9,14 @@ module sequential_matrix_multiplier_TB();
     reg [31:0]  B   [0:m-1][0:m-1];
     reg [31:0]  R   [0:m-1][0:m-1];
     reg write_start = 0;
+
+    wire    [m_len-1:0] a_i;
+    wire    [m_len-1:0] a_j;
+    wire    [m_len-1:0] b_i;
+    wire    [m_len-1:0] b_j;
+    wire    [m_len-1:0] z_i;
+    wire    [m_len-1:0] z_j;
+
 
     localparam clock_period = 10;
     always #clock_period clk = ~clk;

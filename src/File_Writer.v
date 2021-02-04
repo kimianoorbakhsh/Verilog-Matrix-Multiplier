@@ -8,8 +8,8 @@ module writer
     // input                               value_stb,
     input      [31:0]                   value,
     input                               start,
-    output  reg [4:0]  i,
-    output  reg [4:0]  j,
+    output  reg [4:0]                   j,
+    output  reg [4:0]                   i,
     // output  reg                         value_ack,
     output  reg                         done
 );
@@ -24,11 +24,12 @@ integer file;
 initial begin
     wait (start);
 
-    file = $fopen("sim_out.bin", "ab");
+    file = $fopen("sim_out.bin", "wb");
 
     for (i = 0 ; i < n ; i = i + 1) begin
         for (j = 0 ; j < n ; j = j + 1) begin
-            #10 $fwrite(file, "%b", value);
+            $display("%b , %b    ->   %b\n",i , j, value);
+            #10 $fwrite(file, "%b\n", value);
         end
     end
     done = 1;
