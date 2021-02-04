@@ -33,7 +33,7 @@ reg     [31:0]  R   [0:n-1][0:n-1];
 wire    [-1:0]  done_signals;
 
 assign z_out = R[z_i][z_j];
-assign done = (done_signals == ~0); //(num_of_matrices**2){1'b1}); // potential bug
+assign done = (~done_signals == 0); //(num_of_matrices**2){1'b1}); // potential bug
 
 genvar i, j;
 generate
