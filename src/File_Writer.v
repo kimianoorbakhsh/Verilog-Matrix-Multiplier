@@ -1,6 +1,7 @@
 module writer
 #(
-    parameter n = 8
+    parameter n = 8,
+    parameter n_len = $ceil($clog2(n))
 )
 (
 
@@ -8,8 +9,8 @@ module writer
     // input                               value_stb,
     input      [31:0]                   value,
     input                               start,
-    output  reg [4:0]                   j,
-    output  reg [4:0]                   i,
+    output  reg [n_len:0]                   j,
+    output  reg [n_len:0]                   i,
     // output  reg                         value_ack,
     output  reg                         done
 );
@@ -29,7 +30,7 @@ initial begin
     for (i = 0 ; i < n ; i = i + 1) begin
         for (j = 0 ; j < n ; j = j + 1) begin
             $display("%b , %b    ->   %b\n",i , j, value);
-            #10 $fwrite(file, "%b\n", value);
+            #50 $fwrite(file, "%b\n", value);
         end
     end
     done = 1;

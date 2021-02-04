@@ -4,10 +4,14 @@ module writer_testbench #(
 
     reg [31:0]  matrix[0:n-1][0:n-1];
 
+    localparam n_len = $ceil($clog2(n));
+
     integer i ;
     integer j ;
     reg [5:0] val;
     reg write_start = 0;
+    wire [n_len:0] r_i;
+    wire [n_len:0] r_j;
 
     writer #(.n(n)) fileWriter (
         .value(matrix[r_i][r_j]),
