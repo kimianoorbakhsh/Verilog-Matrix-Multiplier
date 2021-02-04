@@ -23,7 +23,8 @@ initial begin
     file = $fopen("sim_out.bin", "wb");
     for (i = 0 ; i < n ; i = i + 1) begin
         for (j = 0 ; j < n ; j = j + 1) begin
-            #10 $fwrite(file, value);
+            $display("writing result[%d][%d] = %b", i, j, value);
+            #10 $fwrite(file, "%c%c%c%c", value[31:24], value[23:16], value[15:8], value[7:0]);
         end
     end
     done = 1;

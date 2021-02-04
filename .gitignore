@@ -95,4 +95,6 @@ xst/
 _ngo/
 _xmsgs/
 
+sim_out.bin
+
 # End of https://www.toptal.com/developers/gitignore/api/modelsim,xilinxise

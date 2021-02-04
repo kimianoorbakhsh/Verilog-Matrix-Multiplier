@@ -153,17 +153,6 @@ always @(posedge clk or posedge rst) begin
                     state <= s_b_ack_add;
                     add_input_b_stb <= 1;
                 end
-
-                // add_input_a_stb <= 1;
-                // if (add_input_a_ack) begin
-                //     add_input_a_stb <= 0;
-                // end
-
-                // // when mult result is ready, acknowledge it and go to next state
-                // if (mul_output_z_stb) begin
-                //     mul_output_z_ack <= 1;
-                //     state <= s_b_ack_add;
-                // end
             end
 
             s_b_ack_add: begin   
@@ -190,7 +179,6 @@ always @(posedge clk or posedge rst) begin
                     if (k == m - 1) begin
                         z_out <= 0;
                         k <= 0;
-
 
                         if (j == m - 1) begin
                             j <= 0;

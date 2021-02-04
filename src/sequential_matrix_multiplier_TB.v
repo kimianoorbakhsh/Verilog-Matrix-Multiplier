@@ -16,6 +16,9 @@ module sequential_matrix_multiplier_TB();
     wire    [m_len-1:0] b_j;
     wire    [m_len-1:0] z_i;
     wire    [m_len-1:0] z_j;
+    wire    [m_len-1:0] r_i;
+    wire    [m_len-1:0] r_j;
+    wire    [31:0]      z_out;
 
 
     localparam clock_period = 10;
@@ -57,11 +60,6 @@ module sequential_matrix_multiplier_TB();
         $fread(B, file_id);
         $fclose(file_id);
 
-        // rst = 1;
-        // #clock_period;
-        // #clock_period;
-        // rst = 0;
-
         start = 1;
         wait (done);
         write_start = 1;
@@ -72,6 +70,7 @@ module sequential_matrix_multiplier_TB();
     always @ (posedge clk) begin
         z_ack <= 0;
         if (z_stb) begin
+            $display("R[%1d][%1d] = %b", z_i, z_j, z_out);
             R[z_i][z_j] <= z_out;
             z_ack <= 1;
         end
