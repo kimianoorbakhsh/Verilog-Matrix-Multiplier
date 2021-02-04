@@ -26,11 +26,14 @@ module parallel_matrix_multiplier
 localparam num_of_matrices = $ceil(n / m);
 localparam num_of_matrices_len = $ceil($clog2(num_of_matrices));
 
-reg [31:0]                                      A   [0:n-1][0:n-1];
-reg [31:0]                                      B   [0:n-1][0:n-1];
-reg [31:0]                                      R   [0:n-1][0:n-1];
+reg     [31:0]  A   [0:n-1][0:n-1];
+reg     [31:0]  B   [0:n-1][0:n-1];
+reg     [31:0]  R   [0:n-1][0:n-1];
+
+wire    [-1:0]  done_signals;
 
 assign z_out = R[z_i][z_j];
+assign done = (done_signals == ~0); //(num_of_matrices**2){1'b1}); // potential bug
 
 genvar i, j;
 generate
@@ -74,9 +77,10 @@ generate
                     z_ack <= 1;
                 end
             end
+
+            assign done_signals[i * num_of_matrices + j] = mul_done;
         end
     end
-
 endgenerate
 
 always @(posedge a_we) begin
