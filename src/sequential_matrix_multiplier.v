@@ -64,26 +64,26 @@ multiplier MUL(
     .input_b(b_in),
     .input_a_stb(mul_input_a_stb),
     .input_b_stb(mul_input_b_stb),
-    .output_z_ack(mul_output_z_ack),
+    .output_z_ack(mul_result_ack),
     .clk(clk),
     .rst(reset),
     .output_z(mul_result),
-    .output_z_stb(mul_output_z_stb),
+    .output_z_stb(mul_result_stb),
     .input_a_ack(mul_input_a_ack),
     .input_b_ack(mul_input_b_ack)
     );
     
 adder ADDR(
-    .input_a(z_out),
-    .input_b(mul_result),
-    .input_a_stb(add_input_a_stb),
+    .input_a(mul_result),
+    .input_b(z_out),
+    .input_a_stb(mul_result_stb),
     .input_b_stb(add_input_b_stb),
     .output_z_ack(add_output_z_ack),
     .clk(clk),
     .rst(reset),
     .output_z(add_result),
     .output_z_stb(add_output_z_stb),
-    .input_a_ack(add_input_a_ack),
+    .input_a_ack(mul_result_ack),
     .input_b_ack(add_input_b_ack)
 );
 
@@ -149,21 +149,25 @@ always @(posedge clk or posedge rst) begin
             s_wait_mul: begin
                 // $display("i'm mister s_wait_mul look at me");
                 // when received -> go to wait add
-                add_input_a_stb <= 1;
-                if (add_input_a_ack) begin
-                    add_input_a_stb <= 0;
+                if (mul_result_ack) begin
+                    state <= s_b_ack_add;
+                    add_input_b_stb <= 1;
                 end
 
-                // when mult result is ready, acknowledge it and go to next state
-                if (mul_output_z_stb) begin
-                    mul_output_z_ack <= 1;
-                    state <= s_b_ack_add;
-                end
+                // add_input_a_stb <= 1;
+                // if (add_input_a_ack) begin
+                //     add_input_a_stb <= 0;
+                // end
+
+                // // when mult result is ready, acknowledge it and go to next state
+                // if (mul_output_z_stb) begin
+                //     mul_output_z_ack <= 1;
+                //     state <= s_b_ack_add;
+                // end
             end
 
             s_b_ack_add: begin   
                 // $display("i'm mister s_b_ack_add look at me");
-                add_input_b_stb <= 1;
                 if(add_input_b_ack) begin
                     // mul_output_z_ack <= 1;
                     add_input_b_stb <= 0;
@@ -214,7 +218,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 initial begin
-    $monitor("state: %d, z_out: %b, mul_result: %b, add_result: %b, a_in: %b, b_in: %b", state, z_out, mul_result, add_result, a_in, b_in);
+    $monitor("state: %d, z_out: %b", state, z_out, mul_result, add_result, a_in, b_in);
 end
 
 // initial begin
