@@ -15,7 +15,7 @@ module writer_testbench #(
         .i(r_i),
         .j(r_j),
         .done(write_done)
-)
+    );
 
     initial begin
         val = 0;
@@ -23,6 +23,7 @@ module writer_testbench #(
             for (j = 0 ; j < n ; j = j + 1) begin
                 matrix[i][j] = val;
                 val = val + 1;
+                $display("val = %d", );
             end
         end
 
