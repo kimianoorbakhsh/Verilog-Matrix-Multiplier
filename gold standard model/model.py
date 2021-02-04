@@ -1,5 +1,6 @@
 import struct
 import numpy as np
+from numpy import linalg as LA
 
 
 def read_matrix(file_path):
@@ -14,9 +15,12 @@ def read_matrix(file_path):
 
 path_a = "../data/seq_input_a.bin"
 path_b = "../data/seq_input_b.bin"
+path_result = "../sim_out.bin"
 m = 4
 
 matrix_a = read_matrix(path_a)
 matrix_b = read_matrix(path_b)
+matrix_result = read_matrix(path_result)
 result = np.matmul(matrix_a, matrix_b)
 
+print(LA.norm(np.abs(result - matrix_result)) < 0.01)
