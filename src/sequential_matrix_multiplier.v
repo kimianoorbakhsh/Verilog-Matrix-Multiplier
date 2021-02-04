@@ -35,7 +35,7 @@ localparam s_wait_add           =       3'b101;
 localparam s_done               =       3'b110;
 localparam s_reset              =       3'b111;
 
-localparam m_len = $ceil($clog2(m));
+localparam m_len = 5;
 
 
 reg [2:0]       state                    = 0;
