@@ -1,5 +1,5 @@
 module writer_testbench #(
-    parameter n = 4   
+    parameter n = 8 
 )();
 
     reg [31:0]  matrix[0:n-1][0:n-1];
@@ -27,7 +27,6 @@ module writer_testbench #(
             for (j = 0 ; j < n ; j = j + 1) begin
                 val = val + 1;
                 matrix[i][j] = val;
-                $display("val = %d", val);
             end
         end
 
