@@ -218,7 +218,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 initial begin
-    $monitor("state: %d, z_out: %b", state, z_out, mul_result, add_result, a_in, b_in);
+    $monitor("state: %d, z_out: %b, mul_result: %b, add_result: %b, a_in: %b, b_in: %b", state, z_out, mul_result, add_result, a_in, b_in);
 end
 
 // initial begin
