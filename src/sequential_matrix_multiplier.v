@@ -9,6 +9,7 @@ module sequential_matrix_multiplier
     input                           start,
     input   [31:0]                  a_in,
     input   [31:0]                  b_in,
+    input   [31:0]                  current_element,
     input                           z_ack,
     output  [m_len-1:0]             a_i,
     output  [m_len-1:0]             a_j,
@@ -89,7 +90,7 @@ always @(posedge clk or posedge rst) begin
         i <= 0;
         j <= 0;
         k <= 0;
-        z_out <= 0;
+        z_out <= current_element;
         mul_output_z_ack <= 0;
         add_output_z_ack <= 0;
         add_input_a_stb <= 0;
@@ -108,7 +109,7 @@ always @(posedge clk or posedge rst) begin
                     i <= 0;
                     j <= 0;
                     k <= 0;
-                    z_out <= 0;
+                    z_out <= current_element;
                     reset <= 1;
                     mul_output_z_ack <= 0;
                     add_output_z_ack <= 0;
