@@ -16,8 +16,8 @@ module sequential_matrix_multiplier_TB();
     wire    [m_len-1:0] b_j;
     wire    [m_len-1:0] z_i;
     wire    [m_len-1:0] z_j;
-    wire    [m_len-1:0] r_i;
-    wire    [m_len-1:0] r_j;
+    wire    [m_len:0] r_i;
+    wire    [m_len:0] r_j;
     wire    [31:0]      z_out;
 
 
