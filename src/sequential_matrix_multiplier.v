@@ -49,6 +49,8 @@ reg             add_input_a_stb;
 reg             add_input_b_stb;
 reg             add_output_z_ack;
 reg             reset;
+wire    [31:0]  mul_result;
+wire    [31:0]  add_result;
 
 assign a_i = i;
 assign a_j = k;
@@ -124,12 +126,12 @@ always @(posedge clk or posedge rst) begin
                 end
             end
             s_reset: begin
-                $display("i'm mister reset look at me");
+                // $display("i'm mister reset look at me");
                 reset <= 0;
                 state <= s_a_ack_mul;
             end
             s_a_ack_mul: begin
-                $display("i'm mister s_a_ack_mul look at me");
+                // $display("i'm mister s_a_ack_mul look at me");
                 mul_input_a_stb <= 1;
                 if (mul_input_a_ack) begin
                     mul_input_a_stb <= 0;
@@ -137,7 +139,7 @@ always @(posedge clk or posedge rst) begin
                 end
             end
             s_b_ack_mul: begin
-                $display("i'm mister s_b_ack_mul look at me");
+                // $display("i'm mister s_b_ack_mul look at me");
                 mul_input_b_stb <= 1;
                 if (mul_input_b_ack) begin
                     mul_input_b_stb <= 0;
@@ -145,7 +147,7 @@ always @(posedge clk or posedge rst) begin
                 end
             end
             s_wait_mul: begin
-                $display("i'm mister s_wait_mul look at me");
+                // $display("i'm mister s_wait_mul look at me");
                 // when received -> go to wait add
                 add_input_a_stb <= 1;
                 if (add_input_a_ack) begin
@@ -160,7 +162,7 @@ always @(posedge clk or posedge rst) begin
             end
 
             s_b_ack_add: begin   
-                $display("i'm mister s_b_ack_add look at me");
+                // $display("i'm mister s_b_ack_add look at me");
                 add_input_b_stb <= 1;
                 if(add_input_b_ack) begin
                     // mul_output_z_ack <= 1;
@@ -169,7 +171,7 @@ always @(posedge clk or posedge rst) begin
                 end
             end 
             s_wait_add: begin
-                $display("i'm mister s_wait_add look at me");
+                // $display("i'm mister s_wait_add look at me");
                 // when received -> go to calc
                 if (add_output_z_stb) begin
                     z_out <= add_result;
@@ -212,7 +214,7 @@ always @(posedge clk or posedge rst) begin
 end
 
 initial begin
-    $monitor("state: %d, z_out: %b", state, z_out);
+    $monitor("state: %d, z_out: %b, mul_result: %b, add_result: %b, a_in: %b, b_in: %b", state, z_out, mul_result, add_result, a_in, b_in);
 end
 
 // initial begin
