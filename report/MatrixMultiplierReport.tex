@@ -20,6 +20,7 @@
 % و سپس دوبار استفاده از xelatex. 
 
 %%%% فراخوانی پکیج‌های مورد نیاز کاربر %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{svg}
 \usepackage{setspace}
 \usepackage{subfigure}
 \usepackage{algorithm}
@@ -99,7 +100,68 @@
 
 \section{مقدمه}
 
+
 \section{معماری سیستم}
+
+معماری این سیستم، از سه لایهٔ اصلی تشکلی شده‌است. در ادامه، معماری و جزئیات هر یک از این لایه‌ها، توضیح داده شده است.
+
+\subsection{
+    ضرب‌کنندهٔ ماتریس ترتیبی
+}
+
+در این ماژول مانند ضرب ماتریسی عادی، دو ماتریس 
+$m \times m$
+را در هم ضرب می‌کنیم. می‌دانیم که برای به دست آوردن درایه 
+$ij$
+حاصلضرب، باید سطر $i$ ام ماتریس اول را در ستون $j$ ام ماتریس دوم ضرب کنیم. برای این موضوع به ازای هر 
+$1\leq i\leq m , 1\leq j\leq m $،
+داریم:
+$$R_{ij} = \sum_{k=0}^m{A_{ik} \times B_{kj}}،$$
+که در آن،
+$R$
+ماتریس
+$m \times m$
+حاصل‌ضرب است.\\
+در این ماژول برای محاسبه جمع و ضرب‌ها، از ماژول‌های جمع‌کننده و ضرب‌کننده اعشاری
+\LTRfootnote{\lr{floatng point adder and multiplier}} 
+ استفاده می‌کنیم.\\
+ماژول ضرب‌کنندهٔ ماتریس ترتیبی
+\LTRfootnote{\lr{sequential matrix multiplier}} 
+ این فرایند را در قالب یک ماشین حالت انجام می‌دهد. برای محاسبه درایه $i,j$ ام، یک 
+ \lr{accumulator}
+ برای نگه‌داری جواب نهایی در نظر می‌گیریم و سپس
+  به ازای هر $k$، ابتدا با استفاده از ماژول 
+ \lr{FP\_multiplier} 
+  حاصل
+$A_{ik}\times B_{kj}$
+ را محاسبه می‌کنیم و با استفاده از ماژول
+  \lr{FP\_Adder}
+ ، به ازای $k$ های مختلف جواب را آپدیت می‌کنیم.
+
+\begin{figure}
+    \centering
+    \includesvg{Images/SequentialBD}
+    \caption{svg image}
+\end{figure}
+  
+
+% \begin{figure}[t]
+% \centering 
+% \includesvg{Images/SequentialBD.svg}
+% % \includegraphics[width=0.2\textwidth]{}
+% \caption{
+% \centering
+% بلوک دیاگرام ضرب‌کنندهٔ ماتریس ترتیبی
+% }\label{fig:SequentialBD}
+% \end{figure}
+
+\subsection{
+    ضرب‌کنندهٔ ماتریس سطری در ستونی
+}
+
+\subsection{
+    ضرب‌کنندهٔ ماتریس موازی
+}
 
 \section{شبیه‌سازی و نتایج}
 
@@ -107,14 +169,7 @@
 
 \section{نتیجه‌گیری}
 
-%\begin{figure}[t]
-%\centering 
-%\includegraphics[width=0.2\textwidth]{Images/TraditionalEncoding.png}
-%\caption{
-%\centering
-%روند تبدیل اسناد متنی به لیستی از کلمات.
-%}\label{fig:TraditionalEncoding}
-%\end{figure}
+
 
 %\begin{table}[ht]
 %\centering

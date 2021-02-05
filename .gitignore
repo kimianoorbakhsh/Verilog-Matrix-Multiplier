@@ -94,7 +94,7 @@ xlnx_auto_0_xdb/
 xst/
 _ngo/
 _xmsgs/
-
+.idea
 sim_out.bin
 
 # End of https://www.toptal.com/developers/gitignore/api/modelsim,xilinxise
