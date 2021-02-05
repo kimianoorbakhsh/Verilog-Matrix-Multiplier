@@ -54,10 +54,10 @@ module sequential_matrix_multiplier_TB();
     );
 
     initial begin
-        file_id = $fopen("data/seq_input_a.bin", "rb");
+        file_id = $fopen("data/square_input_a.bin", "rb");
         $fread(A, file_id);
         $fclose(file_id);
-        file_id = $fopen("data/seq_input_b.bin", "rb");
+        file_id = $fopen("data/square_input_b.bin", "rb");
         $fread(B, file_id);
         $fclose(file_id);
 

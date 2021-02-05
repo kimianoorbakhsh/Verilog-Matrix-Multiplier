@@ -21,7 +21,7 @@ module parallel_matrix_multiplier
     input   [n_len-1:0]             z_j,
     output  [31:0]                  z_out,
     output                          done
-); 
+);
 
 localparam num_of_matrices = $ceil(n / m);
 localparam num_of_matrices_len = $ceil($clog2(num_of_matrices));
