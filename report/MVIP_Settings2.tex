@@ -1,0 +1,70 @@
+% این فایل از روی نمونه‌ فایل ارائه شده برای کنفرانس مهندسی برق ایران ICEE برای کنفرانس بینایی ماشین و پردازش تصویر ایران به‌روزرسانی شده است.
+% این فایل شامل تنظیماتی است که بعد از لود شدن پکیج زی‌پرشین باید انجام شوند.
+% نویسنده: مسعود بابایی‌زاده
+% نسخه 1.0.0
+% تاریخ: ۳ مهرماه ۱۳۹۳
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Font settings
+
+\settextfont[ BoldFont={XB Kayhan Bd.ttf}, BoldItalicFont={XB Kayhan BdIt.ttf}, ItalicFont={XB Kayhan It.ttf},Scale=1.2]{XB Kayhan.ttf}
+\setdigitfont[Scale=1.2]{XB Kayhan.ttf}
+\setlatintextfont[Scale=1]{Times New Roman}
+\defpersianfont\titlefont[Scale=1]{IRTitr.ttf}
+\setiranicfont[Scale=1.2]{XB Kayhan It.ttf}				% ایرانیک، خوابیده به چپ
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% تنظیم فاصله خطوط:
+% زیاد کردن \baselineskip بر خلاف \baselinestreatch روی محیط ریاضی تاثیری ندارد. اما \baselineskip را باید بعد از \begin{document} زیاد کرد. با توجه به اینکه singlespace برای فرمولهای ریاضی در متن فارسی زیادی کوچک است،‌ پس برای آنکه طبق اعداد بالا فاصله خطوط در فرمولهای 1 برابر و در متن فارسی 1.1 برابر باشد، لازم است که طبق دستور زیر \baselinestreatch برابر 1 قرار داده شود و سپس درون متن و بعد از  \begin{document} باید \baselineskip را 1.1/1.0=1.1 برابر نمود. یعنی:
+
+\renewcommand{\baselinestretch}{1}
+%\setlength{\baselineskip}{1.1\baselineskip}   ->  This is inside the text and right after \begin{document}
+%برای آنکه کاربر مجبور نباشد دستور بالا را دستی بعد از begin document اضافه کند، دستورات زیر را می‌نویسیم:
+\let\olddocument=\document
+\let\endolddocument=\enddocument
+\renewenvironment{document}{\begin{olddocument}\setlength{\baselineskip}{1.53\baselineskip}}{\end{olddocument}}
+%در اینصورت فاصله فرمولها با متن کمی زیاد می‌شود که آن را نیز با دستورات زیر می‌توان حل کرد:
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+% For Yas font
+%\renewenvironment{equation}{\vspace{0.2em}\begin{oldequation}}{\vspace{-0.5em}\end{oldequation}\ignorespacesafterend}
+% For IRLotus font
+\renewenvironment{equation}{\vspace{0.0em}\begin{oldequation}}{\vspace{-0.4em}\end{oldequation}\ignorespacesafterend}
+
+
+% هبا اعداد بالا در فهرست مطالب و فهرست اشکال و جداول نیز فاصله خطوط زیاد است. که به صورت زیر می‌توان اصلاح کرد (یعنی برای آنها baselineskip را مجددا به عدد قبلی برگرداند، یعنی در معکوس 1.1 که برابر 0.91 می‌شود ضرب کرد):
+\let\oldtableofcontents=\tableofcontents
+\renewcommand{\tableofcontents}{\begingroup\setlength{\baselineskip}{0.91\baselineskip}\oldtableofcontents\endgroup}
+
+\let\oldlistoffigures=\listoffigures
+\renewcommand{\listoffigures}{\begingroup\setlength{\baselineskip}{0.91\baselineskip}\oldlistoffigures\endgroup}
+
+\let\oldlistoftables=\listoftables
+\renewcommand{\listoftables}{\begingroup\setlength{\baselineskip}{0.91\baselineskip}\oldlistoftables\endgroup}
+
+% دستور با اعداد بالا، فاصله خطوط در یک متن انگلیسی زیادی  (مثلا فهرست مراجع) بزرگ است. در پایین با تغییر تعریف latin آن را در 0.91 ضرب کرده‌ام:
+\let\oldlatin=\latin
+\let\endoldlatin=\endlatin
+\renewenvironment{latin}{\begin{oldlatin}\setlength{\baselineskip}{0.91\baselineskip}}{\end{oldlatin}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% دستور زیر برای زیادکردن تورفتگی اول هر پاراگراف است. مقدار پیش‌فرض قبلی، برای متون انگلیسی است و برای متون فارسی زیادی کوچک است.
+
+\parindent=1cm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% برای آنکه در شماره‌گذاری حرفی و ابجد به جای آ از الف استفاده شود (این دستورات از تمپلیت تهیه شده توسط دکتر امین‌طوسی برا پایان‌نامه‌های دانشگاه حکیم سبزواری برداشته شده است):
+
+\makeatletter
+
+ \def\abj@num@i#1{%
+   \ifcase#1\or الف\or ب\or ج\or د%
+            \or ه‍\or و\or ز\or ح\or ط\fi
+   \ifnum#1=\z@\abjad@zero\fi}   
+  
+   \def\@harfi#1{\ifcase#1\or الف\or ب\or پ\or ت\or ث\or
+ ج\or چ\or ح\or خ\or د\or ذ\or ر\or ز\or ژ\or س\or ش\or ص\or ض\or ط\or ظ\or ع\or غ\or
+ ف\or ق\or ک\or گ\or ل\or م\or ن\or و\or ه\or ی\else\@ctrerr\fi}
+ 
+ \makeatother
+

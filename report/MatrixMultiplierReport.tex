@@ -1,0 +1,155 @@
+\documentclass[conference]{IEEEtran-ModifiedForMVIP}
+% این فایل از روی نمونه‌ فایل ارائه شده برای کنفرانس مهندسی برق ایران ICEE 
+% برای کنفرانس بینایی ماشین و پردازش تصویر ایران به‌روزرسانی شده است.
+% فایل منبع و فایلهای ضمیمه‌ی آن با تغییر فایلهایی که توسط آقای دکتر محمود امین طوسی (دانشگاه
+% حکیم سبزواری، http://profs.hsu.ac.ir/mamintoosi) در سایت www.parsilatex.com قرار داده 
+% شده بودند به دست آمده است. این تغییرات توسط دکتر مسعود بابایی‌زاده داده شده است. 
+% البته فایل IEEEtran-ModifiedForICEE.cls در اینجا، 
+% اصلاح شده فایل آقای دکتر امین طوسی نیست و مستقیما با دستکاری
+% در فایل IEEEtran.cls توسط مسعود بابایی زاده ایجاد شده است.
+% برای کنفرانس بینایی ماشین و پردازش تصویر ایران، فایل IEEEtran-ModifiedForICEE.cls 
+% با نام IEEEtran-ModifiedForMVIP.cls  تغییر داده شده است.
+
+% مقاله اصلی که این فایل از تغییر فایل آن به دست آمده است، در هفدهمین کنفرانس مهندسی برق 
+% ایران در اردیبهشت ۸۸ ارائه شده بوده است.
+
+% شما می‌توانید از این فایل به عنوان یک الگو برای مقالات خود استفاده نمایید.
+
+% برای پردازش پس از یکبار استفاده از xelatex با استفاده از دستور زیر لیست مراجع را تولید نمایید:
+% bibtex MVIP_FA_LaTeX_SamplePaper
+% و سپس دوبار استفاده از xelatex. 
+
+%%%% فراخوانی پکیج‌های مورد نیاز کاربر %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}
+\usepackage{subfigure}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+%\usepackage[colorlinks, citecolor=blue]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% فراخوانی تنظیمات مورد نیاز کنفرانس مهندسی برق ایران و پکیج زی‌پرشین %%%%%%%%%%%%%%%%
+\input{MVIP_Settings1.tex}
+% یکی از دو روش زیر را انتخاب کنید. گذاشتن حالت «کشیده» باعث می‌شود که تنطیم
+% طول خطها بجای اینکه با کم و زیاد کردن فاصله بین کلمات انجام شود، با کشیدن
+% کلمات انجام شود. این حالت در فارسی صحیح‌تر و خیلی زیباتر است (برخلاف انگلیسی که کشیدن کلمات
+% در آن معنی ندارد و تنطیم طول خطوط فقط با کم و زیاد کردن فاصله بین کلمات صورت
+% می‌گیرد). اما با استفاده از حالت «کشیده»، اگر از Acrobat Adobe برای دیدن خروجی پی‌دی‌اف
+% استفاده کنید این کشیده‌ها را می‌بینید که چندان زیبا نیست (در نسخه چاپی وجود ندارند).
+% اگر می‌خواهید اینها را نبینید در قسمت  Edit->Preferences->PageDisplay گزینه
+% Enhance Thin Lines
+% را غیرفعال کنید. اما اگر از SumatraPDF برای دیدن فایل پی‌دی‌اف استفاده می‌کنید، تنظیم خاصی
+% نیاز نیست.
+\usepackage[Kashida]{xepersian}
+% \usepackage{xepersian}
+\input{MVIP_Settings2.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% تعریف دستورات جدید مورد نیاز کاربر %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\femph[1]{\lr{''}#1\lr{``}}
+\newcommand{\SR}{وضوحِ برتر}%{\textiranic{ وضوحِ برتر }}
+\newcommand{\HR}{وضوح بالا}
+\newcommand{\registration}{ثبت تصویر}
+\newcommand{\fusion}{آمیختن}
+\newcommand{\fused}{آمیخته}
+
+\newcommand{\warp}{\mathbf{W}(\mathbf{x};\mathbf{p})}
+\newcommand{\IWarp}{I(\mathbf{W}(\mathbf{x};\mathbf{p}))}
+\newcommand{\round}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\roundB}[2]{\frac{\partial{\mathbf{#1}}}{\partial{\mathbf{#2}}}}
+
+
+% شروع متن اصلی %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+% دستور زیر باعث امکان استفاده از \thanks می‌شود.
+\IEEEoverridecommandlockouts 
+
+\title{
+طراحی و پیاده‌سازی ضرب‌کنندهٔ ماتریس توسط Verilog
+}
+
+\author{
+\IEEEauthorblockN{
+احمد سلیمی
+\textsuperscript{1}،
+کیمیا نوربخش
+\textsuperscript{1}،
+ساعی سعادت
+\textsuperscript{1}،
+علیرضا حسین‌پور
+\textsuperscript{1}
+}
+\IEEEauthorblockA{\textsuperscript{1}
+دانشگاه صنعتی شریف، دانشکده مهندسی کامپیوتر}
+}
+
+%\date{}
+\maketitle
+% چکیده مقاله
+\begin{abstract}
+\end{abstract}
+\begin{IEEEkeywords}
+% کلمات کلیدی
+\end{IEEEkeywords}
+
+%\IEEEpeerreviewmaketitle
+
+\section{مقدمه}
+
+\section{معماری سیستم}
+
+\section{شبیه‌سازی و نتایج}
+
+\section{سنتز و نتایج}
+
+\section{نتیجه‌گیری}
+
+%\begin{figure}[t]
+%\centering 
+%\includegraphics[width=0.2\textwidth]{Images/TraditionalEncoding.png}
+%\caption{
+%\centering
+%روند تبدیل اسناد متنی به لیستی از کلمات.
+%}\label{fig:TraditionalEncoding}
+%\end{figure}
+
+%\begin{table}[ht]
+%\centering
+%\caption{پارامتر‌های روش‌های دسته‌بندی.}
+%\begin{tabular}[t]{ c c }
+%\toprule
+%روش دسته‌بندی & تعریف پارامترها\\
+%\midrule
+%\lr{KNN} & 
+%\begin{tabular}{r l}
+%تعداد نزدیک‌ترین همسایه‌ها & 3
+%\end{tabular}\\
+%\midrule
+%بیز ساده‌انگارانه & -------\\
+%\midrule
+%انتشار رو به عقب &
+%\begin{tabular}{r l}
+%تعداد نورون لایهٔ نهان & 10\\
+%نرخ یادگیری &
+%$0.3$\\
+%تعداد تکرار & 1000
+%\end{tabular}\\
+%\midrule
+%\lr{NTC} &
+%\begin{tabular}{r c l}
+%نرخ یادگیری &
+%\hspace{1cm}
+%&‌$0.3$\\
+%تعداد تکرار &
+%\hspace{1cm}
+%& 100
+%\end{tabular}
+%\end{tabular}
+%\label{tab:NTCHyperParams}
+%\end{table}
+
+
+\end{document}
