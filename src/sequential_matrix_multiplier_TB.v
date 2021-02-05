@@ -43,8 +43,6 @@ module sequential_matrix_multiplier_TB();
         .done(done)
     );
 
-    integer file_id;
-
     writer #(.n(m)) out_writer (
         .value(R[r_i][r_j]),
         .start(write_start),
@@ -53,7 +51,17 @@ module sequential_matrix_multiplier_TB();
         .done(write_done)
     );
 
+    integer file_id;
+    integer i, j;
+
     initial begin
+        
+        for (i = 0; i < m; i = i + 1) begin
+            for (j = 0; j < m; j = j + 1) begin
+                R[i][j] = 0; 
+            end
+        end
+
         file_id = $fopen("data/square_input_a.bin", "rb");
         $fread(A, file_id);
         $fclose(file_id);

@@ -1,7 +1,7 @@
 `timescale 1 ns / 1 ns
 
 module row_col_multiplier_TB #(
-    parameter n = 4,
+    parameter n = 8,
     parameter m = 4,
     parameter m_len = $ceil($clog2(m)),
     parameter n_len = $ceil($clog2(n))
@@ -9,15 +9,15 @@ module row_col_multiplier_TB #(
 reg         clk = 0;
 reg         rst = 0;
 reg         start = 0;
-reg [31:0]  A   [0:m-1][0:m-1];
-reg [31:0]  B   [0:m-1][0:m-1];
+reg [31:0]  A   [0:m-1][0:n-1];
+reg [31:0]  B   [0:n-1][0:m-1];
 reg [31:0]  R   [0:m-1][0:m-1];
 reg         z_ack;
 reg write_start = 0;
 
 wire    [m_len-1:0] a_i;
-wire    [m_len-1:0] a_j;
-wire    [m_len-1:0] b_i;
+wire    [n_len-1:0] a_j;
+wire    [n_len-1:0] b_i;
 wire    [m_len-1:0] b_j;
 wire    [m_len-1:0] z_i;
 wire    [m_len-1:0] z_j;
@@ -26,7 +26,7 @@ wire    [m_len:0]   r_j;
 wire    [31:0]      z_out;
 
 
-row_col_multiplier #(.n(8), .m(4)) MUL (
+row_col_multiplier #(.n(n), .m(m)) MUL (
 .clk(                   clk         ),
 .rst(                   rst         ),
 .start(                 start       ),
@@ -57,14 +57,22 @@ localparam clock_period = 10;
 always #clock_period clk = ~clk;
 
 integer file_id;
-
+integer i, j;
 initial begin
-    file_id = $fopen("data/seq_input_a.bin", "rb");
+
+    for (i = 0; i < m; i = i + 1) begin
+        for (j = 0; j < m; j = j + 1) begin
+            R[i][j] = 0; 
+        end
+    end
+
+    file_id = $fopen("data/row_input.bin", "rb");
     $fread(A, file_id);
     $fclose(file_id);
-    file_id = $fopen("data/seq_input_b.bin", "rb");
+    file_id = $fopen("data/col_input.bin", "rb");
     $fread(B, file_id);
     $fclose(file_id);
+
     start = 1;
     wait (done);
     write_start = 1;
@@ -81,7 +89,5 @@ always @ (posedge clk) begin
             z_ack <= 1;
         end
 end
-    
-
     
 endmodule
