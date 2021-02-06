@@ -20,6 +20,4 @@ vsim -gui work.<testbench> -voptargs=+acc
 ```
 ## License
 
-MIT License
-
-Copyright (c) 2021 Kimia Noorbakhsh
+MIT License, Copyright (c) 2021 Kimia Noorbakhsh
