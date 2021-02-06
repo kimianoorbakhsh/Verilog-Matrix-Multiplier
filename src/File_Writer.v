@@ -1,9 +1,8 @@
-`timescale 1 ns / 1 ns
-
+`include "settings.h"
 module writer
 #(
     parameter n = 8,
-    parameter n_len = $ceil($clog2(n))
+    parameter n_len = $rtoi($ceil($clog2(n)))
 )
 (
     input      [31:0]                   value,

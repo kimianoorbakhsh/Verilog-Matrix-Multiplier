@@ -1,10 +1,10 @@
-`timescale 1 ns / 1 ns
+`include "settings.h"
 
 module row_col_multiplier_TB #(
     parameter n = 8,
     parameter m = 4,
-    parameter m_len = $ceil($clog2(m)),
-    parameter n_len = $ceil($clog2(n))
+    parameter m_len = $rtoi($ceil($clog2(m))),
+    parameter n_len = $rtoi($ceil($clog2(n)))
 )();
 reg         clk = 0;
 reg         rst = 0;

@@ -1,9 +1,10 @@
+`include "settings.h"
 module parallel_matrix_multiplier
 #(
-    parameter n = 10,
-    parameter m = 4,
-    parameter m_len = $ceil($clog2(m)),
-    parameter n_len = $ceil($clog2(n))
+    parameter n = `n,
+    parameter m = `m,
+    parameter m_len = $rtoi($ceil($clog2(m))),
+    parameter n_len = $rtoi($ceil($clog2(n)))
 )
 (
     input                           clk,
@@ -15,8 +16,8 @@ module parallel_matrix_multiplier
     output                          done
 );
 
-localparam num_of_matrices = $ceil(n / m);
-localparam num_of_matrices_len = $ceil($clog2(n / m));
+parameter num_of_matrices = $rtoi($ceil(n / m));
+parameter num_of_matrices_len = $rtoi($ceil($clog2(n / m)));
 
 reg     [31:0]  A   [0:n-1][0:n-1];
 reg     [31:0]  B   [0:n-1][0:n-1];
@@ -72,11 +73,10 @@ generate
                 end
             end
 
-            initial begin
-                $display("row_col n: %1d, m: %1d - seq m: %1d", MUL.n, MUL.m, MUL.MUL.m);
-                $monitor("[%1d, %1d] Reading A[%1d][%1d]: %b, B[%1d][%1d]: %b", i, j, i * m + mul_a_i, mul_a_j, A[i * m + mul_a_i][mul_a_j], mul_b_i, j * m + mul_b_j, B[mul_b_i][j * m + mul_b_j]);
-            end
-
+            // initial begin
+            //     $display("row_col n: %1d, m: %1d - seq m: %1d", MUL.n, MUL.m, MUL.MUL.m);
+            //     $monitor("[%1d, %1d] Reading A[%1d][%1d]: %b, B[%1d][%1d]: %b", i, j, i * m + mul_a_i, mul_a_j, A[i * m + mul_a_i][mul_a_j], mul_b_i, j * m + mul_b_j, B[mul_b_i][j * m + mul_b_j]);
+            // end
             assign done_signals[i * num_of_matrices + j] = mul_done;
         end
     end

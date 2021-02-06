@@ -4,7 +4,7 @@ module writer_testbench #(
 
     reg [31:0]  matrix[0:n-1][0:n-1];
 
-    localparam n_len = $ceil($clog2(n));
+    localparam n_len = $rtoi($ceil($clog2(n)));
 
     integer i ;
     integer j ;

@@ -18,6 +18,9 @@ Computer Engineering Department
 vlog -work work ./src/*.v
 vsim -gui work.<testbench> -voptargs=+acc
 ```
+``` Check the output with Golden Model in python:
+python3 <model.py address> <input_a address> <input_b address> <simout.b address> <m> <n> <m>
+```
 ## License
 
-MIT License, Copyright (c) 2021 Kimia Noorbakhsh
+MIT License, Copyright (c) 2021 Kimia Noorbakhsh and the gang

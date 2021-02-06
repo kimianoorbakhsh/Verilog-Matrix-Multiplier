@@ -1,7 +1,8 @@
+`include "settings.h"
 module sequential_matrix_multiplier
 #(
-    parameter m = 4,
-    parameter m_len = $ceil($clog2(m))
+    parameter m = `m,
+    parameter m_len =$rtoi($ceil($clog2(m)))
 )
 (
     input                           clk,
@@ -31,8 +32,7 @@ localparam s_wait_add           =       3'b101;
 localparam s_done               =       3'b110;
 localparam s_reset              =       3'b111;
 
-
-reg [2:0]       state                    = 0;
+reg [2:0]       state;
 reg [m_len-1:0] i;
 reg [m_len-1:0] j;
 reg [m_len-1:0] k;  // a[i,k] * b [k,j]

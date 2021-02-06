@@ -1,9 +1,10 @@
+`include "settings.h"
 module row_col_multiplier
 #(
-    parameter n = 8,
-    parameter m = 4,
-    parameter m_len = $ceil($clog2(m)),
-    parameter n_len = $ceil($clog2(n))
+    parameter n = `n,
+    parameter m = `m,
+    parameter m_len = $rtoi($ceil($clog2(m))),
+    parameter n_len = $rtoi($ceil($clog2(n)))
 )
 (
     input                           clk,
@@ -24,14 +25,14 @@ module row_col_multiplier
     output  reg                     done
 );
 
-localparam num_of_matrices = $ceil(n / m);
-localparam num_of_matrices_len = $ceil($clog2(n / m));
+parameter num_of_matrices = $rtoi($ceil(n / m));
+parameter num_of_matrices_len = $rtoi($ceil($clog2(n / m)));
 
 localparam s_idle = 2'b00;
 localparam s_calc = 2'b01;
 localparam s_done = 2'b10;
 
-reg     [1:0]                       state   =   0;
+reg     [1:0]                       state;
 reg     [num_of_matrices_len-1:0]   k;
 reg                                 mul_start;
 reg                                 mul_rst;
@@ -74,7 +75,7 @@ always @(posedge clk or posedge rst) begin
     end
     else begin
 
-        case(state)
+        casex(state)
 
             s_idle: begin
                 if (start) begin
@@ -91,18 +92,18 @@ always @(posedge clk or posedge rst) begin
                 if (mul_done) begin
                     mul_start <= 0;
                     mul_rst <= 1;
-                    if (k === num_of_matrices - 1)
+                    if (k == num_of_matrices - 1)
                         state <= s_done;
                     else
-                        k = k + 1;
+                        k <= k + 1;
                 end
             end
             s_done: begin
                 done <= 1;
-                state = s_idle;
+                state <= s_idle;
             end
 
-            default: state = s_idle;
+            default: state <= s_idle;
         endcase
 
     end
