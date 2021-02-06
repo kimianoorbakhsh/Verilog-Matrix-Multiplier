@@ -23,4 +23,4 @@ python3 <model.py address> <input_a address> <input_b address> <simout.b address
 ```
 ## License
 
-MIT License, Copyright (c) 2021 Kimia Noorbakhsh and the gang
+MIT License, Copyright (c) 2021 Kimia Noorbakhsh (and the gang!)
