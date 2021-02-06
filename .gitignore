@@ -49,7 +49,7 @@ vsim.dbg
 *.rbb
 *.rbd
 *.stx
-*.syr
+# *.syr
 *.twr
 *.twx
 *.unroutes
@@ -97,4 +97,4 @@ _xmsgs/
 .idea
 sim_out.bin
 
-# End of https://www.toptal.com/developers/gitignore/api/modelsim,xilinxise
+# End of https://www.toptal.com/developers/gitignore/api/modelsim,xilinxiseع
