@@ -28,6 +28,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}
+\usepackage{pdfpages}
 %\usepackage[colorlinks, citecolor=blue]{hyperref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -197,6 +198,16 @@ $m \times m$
 $m \times m$
 را به مانند یک عدد در نظر می‌گیریم و ماتریس‌های متناظر را در هم ضرب می‌کنیم.
 
+\begin{figure}[t]
+\centering 
+\includegraphics[width=1\linewidth]{Images/RowColBD.png}
+\caption{
+\centering
+بلوک دیاگرام ضرب‌کنندهٔ ماتریس سطری در ستونی.
+}\label{fig:SequentialBD}
+\end{figure}
+
+
 \subsection{
     ضرب‌کنندهٔ ماتریس موازی
 }
@@ -206,7 +217,6 @@ $m \times m$
 \section{سنتز و نتایج}
 
 \section{نتیجه‌گیری}
-
 
 
 %\begin{table}[ht]
@@ -251,4 +261,9 @@ $ \lceil \frac{n}{m} \rceil \times m$
 در نظر می‌گیریم و درایه‌های اضافی را با $0$ پر می‌کنیم.
 در نظر می‌گیریم و درایه‌های اضافی را با $0$  پر می‌کنیم
 در نهایت برای ذخیره کردن جواب اندیس‌ها از $n$ فراتر نخواهند رفت در نتیجه جواب $n \times n$ باقی خواهد ماند.
+
+\newpage
+‌
+\includepdf[pages=-]{ParallelSummary.pdf}
+
 \end{document}
