@@ -1,6 +1,6 @@
 module sequential_matrix_multiplier_TB();
     localparam m = 4;
-    localparam m_len = $ceil($clog2(m));
+    localparam m_len = $rtoi($ceil($clog2(m)));
     reg         clk = 0;
     reg         rst = 0;
     reg         start = 0;
