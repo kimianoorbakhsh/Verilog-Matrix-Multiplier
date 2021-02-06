@@ -162,14 +162,14 @@ always @(posedge clk or posedge rst) begin
                     reset <= 1;
                     state <= s_reset;
 
-                    if (k == m - 1) begin
+                    if (k >= m - 1) begin
                         z_out <= 0;
                         k <= 0;
 
-                        if (j == m - 1) begin
+                        if (j >= m - 1) begin
                             j <= 0;
 
-                            if (i == m - 1)
+                            if (i >= m - 1)
                                 state <= s_done;
                             else
                                 $display("\t i -> %d", i);
