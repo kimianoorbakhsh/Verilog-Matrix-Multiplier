@@ -1,4 +1,5 @@
-`include "settings.h"
+// `include "settings.h"
+`timescale 1 ns / 1 ns
 
 module row_col_multiplier_TB #(
     parameter n = 8,

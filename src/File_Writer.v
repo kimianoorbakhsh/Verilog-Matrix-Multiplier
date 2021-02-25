@@ -1,4 +1,6 @@
-`include "settings.h"
+// `include "settings.h"
+`timescale 1 ns / 1 ns
+
 module writer
 #(
     parameter n = 8,

@@ -1,8 +1,10 @@
-`include "settings.h"
+// `include "settings.h"
+`timescale 1 ns / 1 ns
+
 module parallel_matrix_multiplier
 #(
-    parameter n = `n,
-    parameter m = `m,
+    parameter n = 4,
+    parameter m = 2,
     parameter m_len = $rtoi($ceil($clog2(m))),
     parameter n_len = $rtoi($ceil($clog2(n)))
 )

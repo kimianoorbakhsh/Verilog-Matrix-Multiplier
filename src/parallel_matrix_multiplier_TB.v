@@ -1,8 +1,9 @@
-`include "settings.h"
+// `include "settings.h"
+`timescale 1 ns / 1 ns
 
 module parallel_matrix_multiplier_TB();
-    localparam          n       = `n;
-    localparam          m       = `m;
+    localparam          n       = 4;
+    localparam          m       = 2;
     localparam          n_len   = $rtoi($ceil($clog2(n)));
     reg                 clk     = 0;
     reg                 rst     = 0;
